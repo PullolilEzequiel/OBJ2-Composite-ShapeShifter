@@ -9,13 +9,8 @@ import java.util.List;
 
 
 public class ShapeShifterTest {
-	ShapeShifter shifterA;
-	ShapeShifter shifterB;
-	@BeforeEach
-	void setup(){
-		shifterA = new ShapeShifter(1);
-		shifterB = new ShapeShifter(2);
-	}
+	ShapeShifter shifterA = new ShapeShifter(1);
+	ShapeShifter shifterB = new ShapeShifter(2);
 	@Test
 	void ShapeShifterLevelZeroGenerateShapeShifterCompositeTest(){
 		Assertions.assertInstanceOf(ShapeShifterComposite.class, shifterA.compose(shifterB));
@@ -32,33 +27,29 @@ public class ShapeShifterTest {
 	}
 
 	@Test
-	void compositionChangeValue(){
-		ArrayList<Integer> expectedList = new ArrayList<>();
+	void shifterValueReturnAsingleton(){
 		Assertions.assertEquals(
-			Arrays.asList(1),
+			List.of(1),
 			shifterA.values());
 		Assertions.assertEquals(
-			Arrays.asList(2),
+			List.of(2),
 			shifterB.values());
+	}
 
-
-
-		IShapeShifter composition = shifterA.compose(shifterB);
-		expectedList.add(1);
-		expectedList.add(2);
-
-		Assertions.assertEquals(
-			expectedList,
-			composition.values()
-		);
-
-		composition = composition.compose(
-			new ShapeShifter(5)
-		);
-		expectedList.add(5);
-		Assertions.assertEquals(
-			expectedList,
-			composition.values()
-		);
+	@Test
+	void compositionBetweenShifterChangeValueReturn(){
+		ArrayList<Integer> expectedList = new ArrayList<>();
+		IShapeShifter composition = new ShapeShifter(0);
+		expectedList.add(0);
+		for(int i=0; i < 5; i++) {
+			composition = composition.compose(
+				new ShapeShifter(i)
+			);
+			expectedList.add(i);
+			Assertions.assertEquals(
+				expectedList,
+				composition.values()
+			);
+		}
 	}
 }
