@@ -1,10 +1,8 @@
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -22,12 +20,12 @@ public class ShapeShifterTest {
 		IShapeShifter compositeSubject = shifterA;
 		for(int i= 0; i < 5; i++){
 			Assertions.assertEquals(i, compositeSubject.deepest());
-			compositeSubject = new ShapeShifterComposite(shifterA, compositeSubject);;
+			compositeSubject = new ShapeShifterComposite(shifterA, compositeSubject);
 		}
 	}
 
 	@Test
-	void shifterValueReturnAsingleton(){
+	void shifterValueReturnSingleton(){
 		Assertions.assertEquals(
 			List.of(1),
 			shifterA.values());
@@ -52,4 +50,18 @@ public class ShapeShifterTest {
 			);
 		}
 	}
+
+	@Test
+	void flatShifterPersistValues() {
+		IShapeShifter shifterC = shifterA.compose(shifterB);
+		IShapeShifter shifterD = shifterC.compose(
+			new ShapeShifter(3)
+		);
+
+		List<Integer> preFlatValues = shifterD.values();
+		IShapeShifter flatShifterD = shifterD.flat();
+
+		Assertions.assertEquals(preFlatValues, flatShifterD.values());
+	}
+
 }

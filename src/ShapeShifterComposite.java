@@ -1,8 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.OptionalInt;
-import java.util.stream.Stream;
+import java.util.*;
 
 public class ShapeShifterComposite implements IShapeShifter {
 	List<IShapeShifter> compositions = new ArrayList<>();
@@ -11,8 +7,10 @@ public class ShapeShifterComposite implements IShapeShifter {
 		this.compositions.add(shape2);
 	}
 
-	public ShapeShifterComposite(List<IShapeShifter> list) {
-		this.compositions = list;
+	public ShapeShifterComposite() {}
+
+	public ShapeShifterComposite(IShapeShifter shapeShifter) {
+		this.compositions.add(shapeShifter);
 	}
 
 	@Override
@@ -28,14 +26,16 @@ public class ShapeShifterComposite implements IShapeShifter {
 
 	@Override
 	public IShapeShifter flat() {
-		return  null;
+		IShapeShifter flatter = new ShapeShifterFlat();
+		this.compositions.forEach(flatter::compose);
+		return flatter;
 	}
 
 	@Override
 	public List<Integer> values() {
 		ArrayList<Integer> values = new ArrayList<>();
 
-		this.compositions.stream().forEach(
+		this.compositions.forEach(
 			shifter -> values.addAll(shifter.values())
 		);
 
