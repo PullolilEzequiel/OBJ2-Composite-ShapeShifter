@@ -1,13 +1,17 @@
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class ShapeShifterTest {
+	ShapeShifter shifterA;
+	ShapeShifter shifterB;
+	@BeforeEach
+	void setup(){
+		shifterA = new ShapeShifter();
+		shifterB = new ShapeShifter();
+	}
 	@Test
 	void ShapeShifterLevelZeroGenerateShapeShifterCompositeTest(){
-		ShapeShifter shifterA = new ShapeShifter();
-		ShapeShifter shifterB = new ShapeShifter();
-
-
 		Assertions.assertInstanceOf(ShapeShifterComposite.class, shifterA.compose(shifterB));
 		Assertions.assertInstanceOf(ShapeShifterComposite.class, shifterB.compose(shifterA));
 	}
