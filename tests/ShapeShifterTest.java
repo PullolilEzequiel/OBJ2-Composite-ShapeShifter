@@ -17,11 +17,11 @@ public class ShapeShifterTest {
 	}
 
 	@Test
-	void ShapeShifterDeepestIncrement(){
-		Assertions.assertEquals(0, shifterA.deepest());
-
-		IShapeShifter shifter = shifterA.compose(shifterB);
-		Assertions.assertEquals(1, shifter.deepest());
-		Assertions.assertEquals(2, shifter.compose(shifterA));
+	void compositionIncrementDeepestNumberTest(){
+		IShapeShifter compositeSubject = shifterA;
+		for(int i= 0; i < 5; i++){
+			Assertions.assertEquals(i, compositeSubject.deepest());
+			compositeSubject = new ShapeShifterComposite(shifterA, compositeSubject);;
+		}
 	}
 }

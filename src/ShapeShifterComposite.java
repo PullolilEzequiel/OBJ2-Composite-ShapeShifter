@@ -16,12 +16,8 @@ public class ShapeShifterComposite implements IShapeShifter {
 
 	@Override
 	public int deepest() {
-		OptionalInt max = compositions.stream().mapToInt(IShapeShifter::deepest).max();
-		if (max.isEmpty()){
-			return  1;
-		}else{
-			return  max.getAsInt() + 1;
-		}
+		OptionalInt max = this.compositions.stream().mapToInt(IShapeShifter::deepest).max();
+		return  1 + (max.isPresent()? max.getAsInt() : 0);
 	}
 
 	@Override
