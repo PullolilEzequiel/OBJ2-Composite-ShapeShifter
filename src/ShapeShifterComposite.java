@@ -4,14 +4,14 @@ import java.util.OptionalInt;
 
 public class ShapeShifterComposite implements IShapeShifter {
 	List<IShapeShifter> compositions = new ArrayList<>();
-	public ShapeShifterComposite(IShapeShifter shap1, IShapeShifter shape2) {
-		this.compositions.add(shap1);
+	public ShapeShifterComposite(IShapeShifter shape1, IShapeShifter shape2) {
+		this.compositions.add(shape1);
 		this.compositions.add(shape2);
 	}
 
 	@Override
-	public IShapeShifter compose(IShapeShifter shifter) {
-		return null;
+	public IShapeShifter compose(IShapeShifter shifter){
+		return new ShapeShifterComposite(this, shifter);
 	}
 
 	@Override
