@@ -1,6 +1,10 @@
 import java.util.List;
 
 public class ShapeShifter implements IShapeShifter {
+	private Integer value;
+	public  ShapeShifter(int value){
+		this.value = value;
+	}
 	@Override
 	public IShapeShifter compose(IShapeShifter shifter) {
 		return new ShapeShifterComposite(this, shifter);
@@ -13,11 +17,11 @@ public class ShapeShifter implements IShapeShifter {
 
 	@Override
 	public IShapeShifter flat() {
-		return null;
+		return this;
 	}
 
 	@Override
 	public List<Integer> values() {
-		return List.of();
+		return List.of(this.value);
 	}
 }
