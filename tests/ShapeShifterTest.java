@@ -18,11 +18,10 @@ public class ShapeShifterTest {
 
 	@Test
 	void ShapeShifterDeepestIncrement(){
-		ShapeShifter shifterA = new ShapeShifter();
-		ShapeShifter shifterB = new ShapeShifter();
 		Assertions.assertEquals(0, shifterA.deepest());
 
 		IShapeShifter shifter = shifterA.compose(shifterB);
 		Assertions.assertEquals(1, shifter.deepest());
+		Assertions.assertEquals(2, shifter.compose(shifterA));
 	}
 }
